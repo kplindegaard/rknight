@@ -1,0 +1,19 @@
+{
+  "name": "rknight",
+  "version": "1.0.0",
+  "description": "Knight visiting every square on a chessboard once and only once.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp default",
+    "run": "node dist/main.js"
+  },
+  "author": "Karl-Petter Lindegaard",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^12.7.4",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.1",
+    "typescript": "^3.5.3"
+  }
+}
