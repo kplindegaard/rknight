@@ -53,7 +53,7 @@ namespace vscode
             {
                 Console.WriteLine("Found solution");
                 solved = true;
-                foreach(string move in path)
+                foreach(string move in path.ToArray())
                     Console.WriteLine(move);
                 return true;
             }
