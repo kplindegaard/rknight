@@ -1,15 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace vscode
 {
+    struct Move {
+        int row;
+        int col;
+
+        public Move(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
+
+        public void Update(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
+
+        public string Display() {
+            return $"{(char)(65+col)}{(char)(49+row)}";
+        }
+    }
+
     class KnightSolver
     {
         int size;
         public int[,] board;
 
-        List<string> path;
+        public Move[] path;
 
         bool solved;
 
@@ -20,21 +38,8 @@ namespace vscode
             for (var i=0; i<size; i++)
                 for (var j=0; j<size; j++)
                     board[i,j] = 0;
-            path = new List<string>();
+            path = new Move[size*size];
             solved = false;
-        }
-
-        public static string field(int col, int row)
-        {
-            return $"{(char)(65+col)}{(char)(49+row)}";
-        }
-
-        public void DumpCurrentPath()
-        {
-            foreach (string move in path)
-            {
-                Console.WriteLine(move);
-            }            
         }
 
         public bool Move(int row, int col, int moveNumber)
@@ -48,13 +53,11 @@ namespace vscode
             
             // This is a valid move, so update everything and move on
             board[row,col] = moveNumber;
-            path.Add(field(row, col));
+            path[moveNumber-1].Update(row, col);
             if (moveNumber == size*size)
             {
                 Console.WriteLine("Found solution");
                 solved = true;
-                foreach(string move in path.ToArray())
-                    Console.WriteLine(move);
                 return true;
             }
             Move(row+1, col+2, moveNumber+1);
@@ -66,7 +69,6 @@ namespace vscode
             Move(row-1, col+2, moveNumber+1);
             Move(row-2, col+1, moveNumber+1);
             board[row,col] = 0;
-            path.RemoveAt(path.Count-1);
             return solved;
         }
 
@@ -96,13 +98,17 @@ namespace vscode
                         startCol = int.Parse(args[1]);
                         if (args.Length > 2)
                             startRow = int.Parse(args[2]);
-            Console.WriteLine($"Starting solver on {size}x{size} from field {KnightSolver.field(startCol, startRow)}...");
+            var startMove = new Move(startCol, startRow);
+            Console.WriteLine($"Starting solver on {size}x{size} from field {startMove.Display()}");
 
-            KnightSolver solver = new KnightSolver(size);
             DateTime t0 = DateTime.Now;
+            var solver = new KnightSolver(size);
             var awaiter = solver.RunAsync(startCol, startRow).GetAwaiter();
             bool found = awaiter.GetResult();
             TimeSpan t = DateTime.Now-t0;
+            if (found)
+                foreach (var move in solver.path)
+                    Console.WriteLine(move.Display());
             Console.WriteLine($"Found solution: {found} in {t.TotalSeconds} seconds");
         }
     }
