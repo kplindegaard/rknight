@@ -3,9 +3,10 @@ Recursive knight (rknight)
 
 Exercise in recursive programming from my first university courses back in the day solving a knight's journey across a chess board. It must visit each square once and only once.
 
-Two implementations available
+Three implementations available
 * C# - .NET Core
 * TypeScript for node
+* Go
 
 The applications take three optional parameters:
 1. Size of the board itself.
@@ -44,4 +45,15 @@ node dist/main.js [arguments]
 or
 ```
 npm run [arguments]
+```
+
+Go
+----
+
+How to build and run:
+
+```
+cd golang
+go build rknight.go
+./rknight [arguments]
 ```
