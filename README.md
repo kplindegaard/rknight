@@ -9,6 +9,7 @@ Five implementations available
 * Go
 * Python
 * C
+* Rust
 
 The applications take three optional parameters:
 1. Size of the board itself.
@@ -80,6 +81,22 @@ gcc -O2 -o rknight *.c
 ./rknight
 ```
 
+Rust
+----
+
+The Rust implementation is somewhat particular in that it does not list the 
+moves one by one but instead display the board and assigns the move number to 
+the individual squares.
+
+How to build and run:
+
+```
+cd rust
+cargo build --release
+target/release/knight [arguments]
+```
+
+
 Informal performance comparison
 ===============================
 
@@ -99,6 +116,7 @@ programs will be run in real life and thus relevant from a user's perspective.
 |------------|-------------------|-----------:|----------------:|---------:|
 | C          | GCC 7.4           |   3.94     |                 |     1.00 |
 | Go         | 1.10.4            |   4.61     |                 |     1.17 |
+| Rust       | 1.37.0            |   5.36     |                 |     1.36 |    
 | C#         | .NET Core 3.0.100 |   6.44     |                 |     1.63 |
 | TypeScript | 3.5.3, Node 10.16.0 |   8.55   |                 |     2.17 |
 | Python     | 2.7.15+ (GCC 7.4) | 281.21     | 225.35          |    57.20 |
